@@ -4,7 +4,7 @@
 
 #### PhoneGap is an open source and free framework (with some optional priced tools) enabling the creation of mobile apps across platforms using standard web APIs (HTML, CSS, Javascript).
 
-Consider a small company that wishes to build an app and release it on a few of the mainstream mobile devices. With PhoneGap, rather than requring multiple teams or development cycles to produce a iOS version of the app with Objective C or Swift, an Android version with Java, and a Windows version with XAML and C#, the process may be streamilined with the bulk of the codebase for all apps developed within the same languages. (Of course it is not that, but we will get to that later.)
+Consider a small company that wishes to build an app and release it on a few of the mainstream mobile devices. With PhoneGap, rather than requring multiple teams or development cycles to produce a iOS version of the app with Objective C or Swift, an Android version with Java, and a Windows version with XAML and C#, the process may be streamilined with the bulk of the codebase for all versions of the app developed within the same languages. (Of course it is not that simple, but we will get to that later.)
 
 ## Advantages (Why Should We Care?)
 1. Most importantly, PhoneGap shortens the development cycle for cross-platform mobile apps. Rather than developing two (or more) versions of the same app, the majority of code should remain the same across platforms.

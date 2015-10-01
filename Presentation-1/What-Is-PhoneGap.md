@@ -1,7 +1,7 @@
 ## What is PhoneGap Exactly and How Does it Work?
 
 ### Hybrid Apps
-PhoneGap enables the development of so-called "hybrid apps," apps built with a combination of web technologies that are then wrapped inside a native container and distributed as native applications. Hybrid apps are run via a mobile platform's WebView, essentially a browser window configured to run fullscreen. Hybrid apps may contain native ui and web elements for example with navigation and transitions built natively while webviews are used for most of the content.
+PhoneGap enables the development of so-called "hybrid apps," apps built with a combination of web technologies that are then wrapped inside a native container and distributed as native applications. Hybrid apps are run via a mobile platform's WebView, essentially a browser window configured to run fullscreen. Hybrid apps may contain a mix of native ui and web elements. For example, navigation and transitions may be built natively while webviews are used for most of the content. Well-made hybrid apps [should be largely indistinguishable from their native equivalents](http://developer.telerik.com/featured/what-is-a-hybrid-mobile-app/).
 
 Most hybrid apps leverage Apache Cordova, a platform containing a set of Javascript APIs to access device capabilities via plug-ins built natively. Cordova was initially named PhoneGap, but now PhoneGap is a distribution of Cordova containing additional tools that tie into other Adobe services. (Check out this article: [PhoneGap, Cordova, and what’s in a name?](http://phonegap.com/2012/03/19/phonegap-cordova-and-what’s-in-a-name/))
 
@@ -20,3 +20,6 @@ Most hybrid apps leverage Apache Cordova, a platform containing a set of Javascr
 
 ### Examples of Hybrid Apps
 
+#### Basecamp
+
+A great example of a hybrid mobile app is Basecamp, largely becuase David Heinemeier Hansson (the creator of Ruby on Rails) and his team [blogged extensively on the development of the app](https://signalvnoise.com/posts/3743-hybrid-sweet-spot-native-navigation-web-content). 

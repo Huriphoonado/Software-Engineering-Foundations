@@ -13,19 +13,19 @@ PhoneGap supports two interfaces for creating applications:
 In order to install the Command Line Interface, first you will want to make sure you have [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/) installed. Then, type the following:
 
 ```
-npm install -g phonegap@latest
+$ npm install -g phonegap@latest
 ```
 
 Or in case you need root privilages:
 
 ```
-sudo npm install -g phonegap@latest
+$ sudo npm install -g phonegap@latest
 ```
 
 Once that completes, to make sure you have PhoneGap correctly installed, type:
 
 ```
-phonegap
+$ phonegap
 ```
 
 And you should see a list of available commands:
@@ -57,7 +57,7 @@ Commands:
 Type the following to check the version,
 
 ```
-phonegap version
+$ phonegap version
 5.3.6
 ```
 
@@ -66,6 +66,8 @@ And as of current writing, the latest version of PhoneGap is 5.3.6.
 In case you have issues with the download, the [npm page for PhoneGap](https://www.npmjs.com/package/phonegap) has some common errors and solutions listed.
 
 ### Getting the Developer App Working with the Desktop Interface
+
+(Note, I am largely following PhoneGap's comprehensive guide which may be found [here](http://docs.phonegap.com/getting-started/1-install-phonegap/desktop/).)
 
 First, you will need to download the PhoneGap mobile app for your device ([iOS](https://itunes.apple.com/app/id843536693), [Android](https://play.google.com/store/apps/details?id=com.adobe.phonegap.app), [Windows Phone](https://www.microsoft.com/en-us/store/apps/phonegap-developer/9wzdncrdfsj0)). The PhoneGap Mobile app enables developers to work locally and see changes instantaneously on their device without recompiling or reinstalling the app. The app also provides access to device APIs.
 
@@ -89,8 +91,61 @@ If everything goes according to plan you should see the PhoneGap logo and the bl
 
 [Setup5.png Image]
 
-Finally, within your application directory open up index.html. (In my case it is found in Willie\'s\ App/www/index.html.) Any changes you make and save within this document should appear instantly on your device. In this example, I have changed the text within the header.
+Finally, within your application directory open up index.html. (In my case it is found in Willie\'s\ App/www/index.html.) Any changes you make and save within this document should appear instantly on your device. (Tapping the screen with four fingers will cause an update.) In this example, I have changed the text within the header.
 
-[Setup5.png Image]
+[Setup6.png Image]
 
 ### Getting the Developer App Working with the Commandline Interface
+
+Once again, you will want to make sure you have the PhoneGap Mobile App installed. Then, navigate to a directory in which you want to contain your new mobile app and type the following specifying an id and name for your app. (If you do not specify an id or name, the app will default to "com.phonegap.helloworld" and "Hello World" respectively.)
+
+```
+$ phonegap create WillieApp2 --id "com.willie.app2" --name "Willie's App2"
+Creating a new cordova project.
+
+Downloading hello-world-template library for www...
+
+Download complete
+```
+
+Navigate to your project directory and ensure all of the correct folders have been created.
+
+```
+$ cd WillieApp2
+$ ls
+config.xml	hooks		platforms	plugins		www
+```
+
+Then, in pair your device with the commandline interface via the following command.
+
+```
+$ phonegap serve
+[phonegap] starting app server...
+[phonegap] listening on 10.202.217.213:3000
+[phonegap] 
+[phonegap] ctrl-c to stop the server
+[phonegap] 
+```
+
+Open up the Mobile PhoneGap App and type in the address that is being listened on. Once the two connect you should start seeing messages similar to the following.
+
+```
+[phonegap] 200 /__api__/appzip
+[phonegap] 200 /socket.io/socket.io.js
+[phonegap] 200 /socket.io/?EIO=2&transport=polling&t=1443674012177-0
+[phonegap] [console.log] Received Event: deviceready
+[phonegap] 200 /socket.io/?EIO=2&transport=polling&t=1443674012251-1&sid=aRDIc5eTMmneF2QRAAAA
+[phonegap] 200 /socket.io/?EIO=2&transport=polling&t=1443674012265-2&sid=aRDIc5eTMmneF2QRAAAA
+[phonegap] 200 /socket.io/?EIO=2&transport=polling&t=1443674012436-3&sid=aRDIc5eTMmneF2QRAAAA
+[phonegap] 200 /__api__/autoreload
+[phonegap] 200 /__api__/autoreload
+[phonegap] 200 /__api__/autoreload
+[phonegap] 200 /__api__/autoreload
+[phonegap] 200 /__api__/autoreload
+[phonegap] 200 /__api__/autoreload
+[phonegap] 200 /__api__/autoreload
+```
+
+And finally, just like the previous example, you may begin editing index.html and seeing immediate results in the mobile application.
+
+## Accessing Mobile Device Features with Cordova

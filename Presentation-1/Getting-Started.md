@@ -4,11 +4,11 @@
 
 PhoneGap supports two interfaces for creating applications:
 
-* Desktop App which can be downloaded and easily installed from [here](http://docs.phonegap.com/getting-started/1-install-phonegap/desktop/).
+##### Desktop App which can be downloaded and easily installed from [here](http://docs.phonegap.com/getting-started/1-install-phonegap/desktop/).
 
 [PhoneGapInstaller.png]
 
-* Command Line Interface - (Thorough instructions also found [here](http://docs.phonegap.com/getting-started/1-install-phonegap/cli).)
+##### Command Line Interface - (Thorough instructions also found [here](http://docs.phonegap.com/getting-started/1-install-phonegap/cli).)
 
 In order to install the Command Line Interface, first you will want to make sure you have [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/) installed. Then, type the following:
 

@@ -60,7 +60,7 @@ As of current writing, the most up-to-date version is 5.3.3.
 
 ### Note on Cordova vs PhoneGap
 
-The PhoneGap CLI is built on top of the Cordova CLI so all Cordova commands are supported by PhoneGap, but PhoneGap 
+The PhoneGap CLI is built on top of the Cordova CLI so all Cordova commands are supported by PhoneGap, but PhoneGap has additional features. Most commands can be called with ```phonegap ```, ```cordova ```, or even  ```phonegap cordova ```. In some cases though, the same command run via different CLIs may have different behaviors. (It is a bit confusing to me.) Check out [this page](http://docs.phonegap.com/references/phonegap-cli/cordova) for more information.
 
 ### Getting Cordova Plug-Ins
 

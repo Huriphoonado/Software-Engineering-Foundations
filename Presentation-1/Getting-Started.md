@@ -116,7 +116,7 @@ $ ls
 config.xml	hooks		platforms	plugins		www
 ```
 
-Then, in pair your device with the commandline interface via the following command.
+Then, pair your device with the commandline interface via the following command.
 
 ```
 $ phonegap serve

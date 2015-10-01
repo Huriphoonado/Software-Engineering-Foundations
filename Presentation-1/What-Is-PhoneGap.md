@@ -24,4 +24,10 @@ Most hybrid apps leverage Apache Cordova, a platform containing a set of Javascr
 
 A great example of a hybrid mobile app is Basecamp, largely becuase David Heinemeier Hansson (the creator of Ruby on Rails) and his team [blogged extensively on the development of the app](https://signalvnoise.com/posts/3743-hybrid-sweet-spot-native-navigation-web-content). Basecamp is a project management app enabling team members to communicate and check in on various projects. Hansson describes the benefits of the hybrid approach as far outweighing the challenges (which included dealing with webview integration and handling the loading phase.) Since the controllers and models powering the web version of the app are the same as in the mobile clients, features need only be implemented once, and since much of the features are served from a server, bug fixes and updates can be delivered without going through Apple's approval cycle. Overall, Hansson argues that a majority of information delivering applications can be delivered using the hybrid approach.
 
+#### [Khan Academy](https://www.khanacademy.org)
 
+Khan Academy's hybrid moble app is built by John Resig (the creator of JQuery). The app is a mobile learning platform enabling users to watch videos and read explanations on a variety of topics, work on interactive exercises, and sync their progress to the Khan Academy Website.
+
+Other large-scale hybrid apps include Instagram, Yelp, Twitter, and Evernote. PhoneGap also [showcases a collection of apps](http://phonegap.com/app/) built with its platform.
+
+#### Get Started with PhoneGap

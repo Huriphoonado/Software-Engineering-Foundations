@@ -66,7 +66,7 @@ The PhoneGap CLI is built on top of the Cordova CLI so all Cordova commands are 
 
 Cordova ships with a small set of APIs which which may be found in the [Cordova API Reference Guide](http://cordova.apache.org/docs/en/5.0.0/cordova_plugins_pluginapis.md.html#Plugin%20APIs). Third-party plug-ins may be searched through on [NPM](https://www.npmjs.com/search?q=ecosystem%3Acordova). 
 
-Installing first-party plugins may be done with the ```phonegap plugin add ``` command or alternatively the ```cordova plugin add``` command. For example, say you want your app to be able to take pictures via the device's camera. You would navigate to your PhoneGap project directory and run the following commands to add the plugin and check to make sure it has been added:. (The Whitelist plug-in controls which URLs the WebView itself can be navigated to.)
+Installing first-party plugins may be done with the ```phonegap plugin add ``` command or alternatively the ```cordova plugin add``` command. For example, say you want your app to be able to take pictures via the device's camera. You would navigate to your PhoneGap project directory and run the following commands to add the plugin and check to make sure it has been added. (The Whitelist plug-in controls which URLs the WebView itself can be navigated to.)
 
 ```
 $ phonegap plugin add cordova-plugin-camera
@@ -77,7 +77,7 @@ cordova-plugin-camera 1.2.0 "Camera"
 cordova-plugin-whitelist 1.0.0 "Whitelist"
 ```
 
-Later, if you decide you do not need to use the camera in your application, you can easily remove it:
+Later, if you decide you do not need to use the camera in your application, you can easily remove it. In order to keep the size of your application as small as possible, you will want to remove anything you do not use:
 
 ```
 $ phonegap plugin remove camera
@@ -106,7 +106,22 @@ cordova-plugin-whitelist 1.0.0 "Whitelist"
 
 ### Accessing Native Device Functions with Cordova
 
+Once they have been added to the plugins directory, it is easy to access device functionality with a set of Javascript functions. Using the PhoneGap mobile app to test your code enables use of device APIs whereas testing the code within a browser via localhost will not.
+
+First things first, I've added a few buttons in www/index.html that when pressed will trigger functions in javascript.
+
+```
+<button class="topcoat-button--large" onclick="getContacts()">Count Contacts</button>
+<button class="topcoat-button--large" onclick="useCamera()">Take Photo</button>
+<button class="topcoat-button--large" onclick="getLocation()">Get Location</button>
+<button class="topcoat-button--large" onclick="getAccel()">Accelerometer</button>
+```
+
+Then, in a new file www/js/plugin-features.js, I've written the following functions supporting the camera API, geolocation API, accelerometer API, and the contacts API. Each function requires success and failure callbacks, and each device feature is called via the ```navigator``` object. Failure functions may be called for a number of reasons most notably if the user does not give permission to the app to access the feature such as his/her location.
+
 #### Camera
+
+The [camera API](https://www.npmjs.com/package/cordova-plugin-camera) enables a user to take a photo or retrieve a picture from the user's gallery. The developer may retrieve the image as base64 encoded image (which is shown below and is more useful if you are pushing the image to a database outside of the device) or a link to the image, and specify the quality of the image among other options.
 
 ```
 function cameraSuccess(imageData) {
@@ -126,6 +141,8 @@ function useCamera() {
 ```
 
 #### Geolocation
+
+The [geolocation API](https://www.npmjs.com/package/cordova-plugin-geolocation) provides information about the device's location including latitude, longitude, altitude, and speed. The following success function will simply trigger an alert displaying a lot of geolocation information.
 
 ```
 var geoSuccess = function(position) {
@@ -151,6 +168,8 @@ function getLocation() {
 
 #### Accelerometer
 
+The [accelerometer API](https://www.npmjs.com/package/cordova-plugin-device-motion) utilizes the device's motion sensor that may return continuous or discrete values pointing to the change in the device's movement relative to its position. (It's worth pointing out that this API currently has a build status of "failing.")
+
 ```
 function accelSuccess(acceleration) {
     alert('Acceleration X: ' + acceleration.x + '\n' +
@@ -167,6 +186,8 @@ function getAccel() {
   navigator.accelerometer.getCurrentAcceleration(accelSuccess, accelError);
 }
 ```
+
+The [contacts API]() enables a user to add a new contact to their directory or access contacts within their directory. When searching through a directory, the developer may specify what information to filter by (eg. all contacts named "Sam") as well as how many contacts to return. The following function simply counts how many contacts are stored within the user's directory.
 
 #### Contacts
 
@@ -188,5 +209,7 @@ function getContacts() {
   navigator.contacts.find(fields, contactsSuccess, contactsError, options);
 }
 ```
+
+Of course, there are many other plug-ins allowing access to x, and Cordova [provides resources](http://cordova.apache.org/docs/en/5.0.0/guide_hybrid_plugins_index.md.html#Plugin%20Development%20Guide) to help you develop your own custom plugins. You will want to make sure that if a device feature is critical to your app that you read the documentation on it in the [API Guide](http://cordova.apache.org/docs/en/5.0.0/cordova_plugins_pluginapis.md.html#Plugin%20APIs) before committing to PhoneGap. Many plug-ins including the ones covered above have device specific quirks and capabilities. (For example, only the iOS camera API allows you to geotag photos.)
 
 ### Building your Application and Next Steps

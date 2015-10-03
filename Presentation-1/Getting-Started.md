@@ -148,4 +148,6 @@ Open up the Mobile PhoneGap App and type in the address that is being listened o
 
 And finally, just like the previous example, you may begin editing index.html and seeing immediate results in the mobile application.
 
+If you are interested in understanding the code powering the Hello World example, PhoneGap provides a guide [here](http://docs.phonegap.com/develop/hello-world-explained/).
+
 ### Accessing Mobile Device Features with Cordova

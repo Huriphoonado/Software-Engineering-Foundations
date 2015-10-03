@@ -119,6 +119,8 @@ First things first, I've added a few buttons in www/index.html that when pressed
 
 Then, in a new file www/js/plugin-features.js, I've written the following functions supporting the camera API, geolocation API, accelerometer API, and the contacts API. Each function requires success and failure callbacks, and each device feature is called via the ```navigator``` object. Failure functions may be called for a number of reasons most notably if the user does not give permission to the app to access the feature such as his/her location.
 
+<img src=https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/images/AppScreen.PNG width="375" height="667" align="middle" />
+
 #### Camera
 
 The [camera API](https://www.npmjs.com/package/cordova-plugin-camera) enables a user to take a photo or retrieve a picture from the user's gallery. The developer may retrieve the image as base64 encoded image (which is shown below and is more useful if you are pushing the image to a database outside of the device) or a link to the image, and specify the quality of the image among other options.
@@ -166,6 +168,8 @@ function getLocation() {
 }
 ```
 
+<img src=https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/images/AppLocate.PNG width="375" height="667" align="middle" />
+
 #### Accelerometer
 
 The [accelerometer API](https://www.npmjs.com/package/cordova-plugin-device-motion) utilizes the device's motion sensor that may return continuous or discrete values pointing to the change in the device's movement relative to its position. (It's worth pointing out that this API currently has a build status of "failing.")
@@ -186,6 +190,8 @@ function getAccel() {
   navigator.accelerometer.getCurrentAcceleration(accelSuccess, accelError);
 }
 ```
+
+<img src=https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/images/AppAccel.PNG width="375" height="667" align="middle" />
 
 The [contacts API](https://www.npmjs.com/package/cordova-plugin-contacts) enables a user to add a new contact to their directory or access contacts within their directory. When searching through a directory, the developer may specify what information to filter by (eg. all contacts named "Sam") as well as how many contacts to return. The following function simply counts how many contacts are stored within the user's directory.
 
@@ -209,6 +215,8 @@ function getContacts() {
   navigator.contacts.find(fields, contactsSuccess, contactsError, options);
 }
 ```
+
+<img src=https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/images/AppContacts.PNG width="375" height="667" align="middle" />
 
 Of course, there are many other plug-ins allowing access to the battery level, wifi status, vibration, etc, and Cordova [provides resources](http://cordova.apache.org/docs/en/5.0.0/guide_hybrid_plugins_index.md.html#Plugin%20Development%20Guide) to help you develop your own custom plugins. You will want to make sure that if a device feature is critical to your app that you read the documentation on it in the [API Guide](http://cordova.apache.org/docs/en/5.0.0/cordova_plugins_pluginapis.md.html#Plugin%20APIs) before committing to PhoneGap. Many plug-ins including the ones covered above have device specific quirks and capabilities. (For example, only the iOS camera API allows you to geotag photos.)
 

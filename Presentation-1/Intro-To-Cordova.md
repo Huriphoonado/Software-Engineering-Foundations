@@ -66,7 +66,7 @@ The PhoneGap CLI is built on top of the Cordova CLI so all Cordova commands are 
 
 Cordova ships with a small set of APIs which which may be found in the [Cordova API Reference Guide](http://cordova.apache.org/docs/en/5.0.0/cordova_plugins_pluginapis.md.html#Plugin%20APIs). Third-party plug-ins may be searched through on [NPM](https://www.npmjs.com/search?q=ecosystem%3Acordova). 
 
-Installing first-party plugins may be done with the ```phonegap plugin add ``` command or alternatively the ```cordova plugin add``` command. For example, say you want your app to be able to take pictures via the device's camera. You would navigate to your PhoneGap project directory and run the following commands to add the plugin and check to make sure it has been added:
+Installing first-party plugins may be done with the ```phonegap plugin add ``` command or alternatively the ```cordova plugin add``` command. For example, say you want your app to be able to take pictures via the device's camera. You would navigate to your PhoneGap project directory and run the following commands to add the plugin and check to make sure it has been added:. (The Whitelist plug-in controls which URLs the WebView itself can be navigated to.)
 
 ```
 $ phonegap plugin add cordova-plugin-camera
@@ -104,4 +104,89 @@ cordova-plugin-geolocation 1.0.1 "Geolocation"
 cordova-plugin-whitelist 1.0.0 "Whitelist"
 ```
 
-### Implementing Some Device Features
+### Accessing Native Device Functions with Cordova
+
+#### Camera
+
+```
+function cameraSuccess(imageData) {
+    var image = document.getElementById('myImage');
+    image.src = "data:image/jpeg;base64," + imageData;
+}
+
+function cameraFail(message) {
+    alert('Failed because: ' + message);
+}
+
+function useCamera() {
+  navigator.camera.getPicture(cameraSuccess, cameraFail, { quality: 50,
+    destinationType: Camera.DestinationType.DATA_URL
+  });
+}
+```
+
+#### Geolocation
+
+```
+var geoSuccess = function(position) {
+    alert('Latitude: '          + position.coords.latitude          + '\n' +
+          'Longitude: '         + position.coords.longitude         + '\n' +
+          'Altitude: '          + position.coords.altitude          + '\n' +
+          'Accuracy: '          + position.coords.accuracy          + '\n' +
+          'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+          'Heading: '           + position.coords.heading           + '\n' +
+          'Speed: '             + position.coords.speed             + '\n' +
+          'Timestamp: '         + position.timestamp                + '\n');
+};
+
+function geoError(error) {
+    alert('code: '    + error.code    + '\n' +
+          'message: ' + error.message + '\n');
+}
+
+function getLocation() {
+  navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+}
+```
+
+#### Accelerometer
+
+```
+function accelSuccess(acceleration) {
+    alert('Acceleration X: ' + acceleration.x + '\n' +
+          'Acceleration Y: ' + acceleration.y + '\n' +
+          'Acceleration Z: ' + acceleration.z + '\n' +
+          'Timestamp: '      + acceleration.timestamp + '\n');
+};
+
+function accelError() {
+    alert('Accelerometer Error!');
+};
+
+function getAccel() {
+  navigator.accelerometer.getCurrentAcceleration(accelSuccess, accelError);
+}
+```
+
+#### Contacts
+
+```
+function contactsSuccess(contacts) {
+    alert('Found ' + contacts.length + ' contacts.');
+};
+
+function contactsError(contactError) {
+    alert('Contacts Error!');
+};
+
+function getContacts() {
+  var options = new ContactFindOptions();
+  options.filter   = "";
+  options.multiple = true;
+  options.desiredFields = [navigator.contacts.fieldType.id];
+  var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];
+  navigator.contacts.find(fields, contactsSuccess, contactsError, options);
+}
+```
+
+### Building your Application and Next Steps

@@ -1,5 +1,7 @@
 # PhoneGap
 
+<img src="https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/images/PhoneGapLogo.png" width="300" height="255" align="middle" />
+
 ## Introduction
 
 ##### PhoneGap is an open source and free framework (with some optional priced tools) enabling the creation of mobile apps across platforms using standard web APIs (HTML, CSS, Javascript).

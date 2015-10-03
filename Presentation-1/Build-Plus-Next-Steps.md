@@ -4,7 +4,7 @@
 
 PhoneGap includes two tools for building your app: the Command Line Interface and [PhoneGap Build](https://build.phonegap.com) which compliles your app for you via a cloud service and maintains the most up-to-date SDKs. Since PhoneGap Build requires an account and money if you want to maintain more than one app, I will only cover the CLI.
 
-First, you will want to tell PhoneGap what platforms you intend to deploy your app to. PhoneGap will automatically install the plugins you are using into each platform.
+First, you will want to tell PhoneGap what platforms you intend to deploy your app to. PhoneGap will automatically install the plugins you are using for each platform.
 
 ```
 $ phonegap platform add android

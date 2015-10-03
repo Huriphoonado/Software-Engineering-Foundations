@@ -56,10 +56,11 @@ From here on, you are mostly done with PhoneGap and get to learn how to use each
 I have an iPhone, so in order to get the app running on my phone I will need XCode. (XCode may be downloaded from [here](https://developer.apple.com/xcode/).) Once XCode is installed, open it and navigate within your application directory to platforms/ios and find the file with type ".xcodeproj"
 
 [OpenApp.png]
+<img src=https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/images/OpenApp.png width="470" height="390" align="middle" />
 
 Then, you will want to emulate your app using an iOS simulator. Select a device in the top left corner, click the play button, and if all goes according to plan you should see your app displayed on a virtual iPhone/iPad!
 
-[EmulateApp.png]
+<img src=https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/images/EmulateApp.png width="761" height="548" align="middle" />
 
 Finally, in order to run the app on your device, plug your device into your computer, select iOS device, and click play.
 
@@ -68,7 +69,7 @@ Finally, in order to run the app on your device, plug your device into your comp
 As you can tell, this app does not do very much or look like a native iOS app. (It definitely would not pass Apple's review to make it onto the App Store!) PhoneGap does not provide tools for actually designing the app's interface. For that you will likely want to use a web framework. The following libraries are examples of tools you may wish to include within your project (in no particular order):
 * [JQueryMobile](https://jquerymobile.com) is a web-framework for making responsive mobile websites. JQueryMobile however is very heavy.
 * [Topcoat](http://topcoat.io) is a super lightweight css library developed by Adobe for fast web apps.
-* [Backbone](http://backbonejs.org) is an MVC (Model View Controller) allowing for cleaner software architecture.
+* [Backbone](http://backbonejs.org) is an MVC (Model View Controller) framework allowing for cleaner software architecture.
 * [FastClick](https://github.com/ftlabs/fastclick) removes the 300 ms click delay in mobile browsers. Removing this delay is necessary for making a PhoneGap app feel native.
 * [Ionic](http://ionicframework.com) is a brand-new open source SDK for creating hybrid apps with Cordova and Angular. (This may become a replacement to PhoneGap in the future.)
 

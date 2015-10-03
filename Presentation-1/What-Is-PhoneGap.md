@@ -30,4 +30,6 @@ Khan Academy's hybrid moble app is built by John Resig (the creator of JQuery). 
 
 Other large-scale hybrid apps include Instagram, Yelp, Twitter, and Evernote. PhoneGap also [showcases a collection of apps](http://phonegap.com/app/) built with its platform.
 
-#### Get Started with PhoneGap
+#### [Get Started with PhoneGap](https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/Getting-Started.md)
+
+#### [Or Go to Previous Page](https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/README.md)

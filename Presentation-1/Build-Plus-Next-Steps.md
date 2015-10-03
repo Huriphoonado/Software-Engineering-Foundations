@@ -1,6 +1,6 @@
 ## Building Your App and Next Steps
 
-### Building and Emulating Your App
+### Building and Running a PhoneGap App
 
 PhoneGap includes two tools for building your app: the Command Line Interface and [PhoneGap Build](https://build.phonegap.com) which compliles your app for you via a cloud service and maintains the most up-to-date SDKs. Since PhoneGap Build requires an account and money if you want to maintain more than one app, I will only cover the CLI.
 

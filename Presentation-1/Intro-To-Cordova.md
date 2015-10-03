@@ -187,7 +187,7 @@ function getAccel() {
 }
 ```
 
-The [contacts API]() enables a user to add a new contact to their directory or access contacts within their directory. When searching through a directory, the developer may specify what information to filter by (eg. all contacts named "Sam") as well as how many contacts to return. The following function simply counts how many contacts are stored within the user's directory.
+The [contacts API](https://www.npmjs.com/package/cordova-plugin-contacts) enables a user to add a new contact to their directory or access contacts within their directory. When searching through a directory, the developer may specify what information to filter by (eg. all contacts named "Sam") as well as how many contacts to return. The following function simply counts how many contacts are stored within the user's directory.
 
 #### Contacts
 

@@ -55,7 +55,6 @@ From here on, you are mostly done with PhoneGap and get to learn how to use each
 
 I have an iPhone, so in order to get the app running on my phone I will need XCode. (XCode may be downloaded from [here](https://developer.apple.com/xcode/).) Once XCode is installed, open it and navigate within your application directory to platforms/ios and find the file with type ".xcodeproj"
 
-[OpenApp.png]
 <img src=https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/images/OpenApp.png width="470" height="390" align="middle" />
 
 Then, you will want to emulate your app using an iOS simulator. Select a device in the top left corner, click the play button, and if all goes according to plan you should see your app displayed on a virtual iPhone/iPad!

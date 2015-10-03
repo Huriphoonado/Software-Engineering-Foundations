@@ -73,3 +73,5 @@ As you can tell, this app does not do very much or look like a native iOS app. (
 * [Ionic](http://ionicframework.com) is a brand-new open source SDK for creating hybrid apps with Cordova and Angular. (This may become a replacement to PhoneGap in the future.)
 
 Finally, you will want to consider what blend of native controls and webviews you will want to use in order to make your app feel as fast and native as possible. PhoneGap provides iOS and Android guides [here](http://docs.phonegap.com/develop/1-embed-webview/ios/).
+
+#### [Go to Previous Page](https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/Intro-To-Cordova.md)

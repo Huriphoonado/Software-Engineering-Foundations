@@ -210,6 +210,6 @@ function getContacts() {
 }
 ```
 
-Of course, there are many other plug-ins allowing access to x, and Cordova [provides resources](http://cordova.apache.org/docs/en/5.0.0/guide_hybrid_plugins_index.md.html#Plugin%20Development%20Guide) to help you develop your own custom plugins. You will want to make sure that if a device feature is critical to your app that you read the documentation on it in the [API Guide](http://cordova.apache.org/docs/en/5.0.0/cordova_plugins_pluginapis.md.html#Plugin%20APIs) before committing to PhoneGap. Many plug-ins including the ones covered above have device specific quirks and capabilities. (For example, only the iOS camera API allows you to geotag photos.)
+Of course, there are many other plug-ins allowing access to the battery level, wifi status, vibration, etc, and Cordova [provides resources](http://cordova.apache.org/docs/en/5.0.0/guide_hybrid_plugins_index.md.html#Plugin%20Development%20Guide) to help you develop your own custom plugins. You will want to make sure that if a device feature is critical to your app that you read the documentation on it in the [API Guide](http://cordova.apache.org/docs/en/5.0.0/cordova_plugins_pluginapis.md.html#Plugin%20APIs) before committing to PhoneGap. Many plug-ins including the ones covered above have device specific quirks and capabilities. (For example, only the iOS camera API allows you to geotag photos.)
 
 ### Building your Application and Next Steps

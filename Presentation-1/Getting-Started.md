@@ -7,6 +7,7 @@ PhoneGap supports two interfaces for creating applications:
 ##### Desktop App which can be downloaded and easily installed from [here](http://docs.phonegap.com/getting-started/1-install-phonegap/desktop/).
 
 [PhoneGapInstaller.png]
+<img src="https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/images/PhoneGapInstaller.png" width="510" height="343" align="middle" />
 
 ##### Command Line Interface - (Thorough instructions also found [here](http://docs.phonegap.com/getting-started/1-install-phonegap/cli).)
 

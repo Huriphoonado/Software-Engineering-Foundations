@@ -32,4 +32,4 @@ Other large-scale hybrid apps include Instagram, Yelp, Twitter, and Evernote. Ph
 
 #### [Get Started with PhoneGap](https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/Getting-Started.md)
 
-#### [Or Go to Previous Page](https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/README.md)
+#### [Go to Previous Page](https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/README.md)

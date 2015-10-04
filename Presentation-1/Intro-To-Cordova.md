@@ -106,7 +106,7 @@ cordova-plugin-whitelist 1.0.0 "Whitelist"
 
 ### Accessing Native Device Functions with Cordova
 
-Once they have been added to the plugins directory, it is easy to access device functionality with a set of Javascript functions. Using the PhoneGap mobile app to test your code enables use of device APIs whereas testing the code within a browser via localhost will not.
+Once they have been added to the plugins directory, it is easy to access device functionality with a set of Javascript functions. Using the PhoneGap mobile app to test your code enables use of device APIs whereas testing the code within a browser via localhost will not. The source code to the following is included within the presentation directory.
 
 First things first, I've added a few buttons in www/index.html that when pressed will trigger functions in javascript.
 

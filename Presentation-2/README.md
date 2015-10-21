@@ -119,6 +119,69 @@ if __name__ == '__main__':
 * The Request object wraps the WSGI Environment (which contains all the information the user request transmits to the application) and provides read-only access to the data.
 * The Response object is a WSGI application that may be used to send data back to the server.
 
+### Installing and Getting Started With Flask
+
+
+
+### Flask Application Structure
+
+A smaller application may look like this:
+
+```
+/yourapplication
+    /yourapplication.py
+    /static
+        /style.css
+    /templates
+        layout.html
+        index.html
+        login.html
+        ...
+```
+
+Flask recommends that larger applications are contained within an extra directory and that the main python document is named to __init__.py. [Larger applications may look more like this](http://flask.pocoo.org/docs/0.10/patterns/packages/):
+
+```
+/yourapplication
+    /runserver.py
+    /yourapplication
+        /__init__.py
+        /views.py
+        /static
+            /style.css
+        /templates
+            layout.html
+            index.html
+            login.html
+            ...
+```
+
+This arrangement allows the application to be broken down into multiple modules. The file runserver.py is responsible for actually running the application:
+
+```
+from yourapplication import app
+app.run(debug=True)
+```
+
+The file __init__.py is responsible for creating the Flask object:
+
+```
+from flask import Flask
+app = Flask(__name__)
+
+import yourapplication.views
+```
+
+The file views.py is responsible is responsible for all of the view functions:
+
+```
+from yourapplication import app
+
+@app.route('/')
+def index():
+    return 'Hello World!'
+```
+
 ### Tutorials I Followed in Learning the Basics
 
 ```

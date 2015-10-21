@@ -39,14 +39,66 @@ Other popular Python web frameworks include Django, Web.py, Bottle, and MorePath
 
 ### Jinja2 Template Engine 
 
-Flask can also be called a micro glue framework since it combines the [Jinja2 Template Engine](http://jinja.pocoo.org/2/) and the [Werkzeug](http://werkzeug.pocoo.org/documentation/) toolkit. Keeping in line with Flask's "micro" nature, while both are required to install Flask, developers may choose to use a templatting engine other than Jinja.
+Flask can also be described as a micro glue framework since it combines the [Jinja2 Template Engine](http://jinja.pocoo.org/2/) and the [Werkzeug](http://werkzeug.pocoo.org/documentation/) toolkit. Keeping in line with Flask's "micro" nature, while both are required to install Flask, developers may choose to use a templatting engine other than Jinja.
+
+A template is simply a text file containing variables and expressions that are replaced with values once the template is rendered. The following is the template used in the Flaskr mini blog tutorial (included in the Flask_Tutorials directory).
+
+```
+<!doctype html>
+<title>Flaskr</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<div class="page">
+  <h1>Flaskr</h1>
+  <div class="metanav">
+  {% if not session.logged_in %}
+    <a href="{{ url_for('login') }}">log in</a>
+  {% else %}
+    <a href="{{ url_for('logout') }}">log out</a>
+  {% endif %}
+  </div>
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  {% block body %}{% endblock %}
+  {# Also, a comment! #}
+</div>
+```
+
+Jinja2 contains a few kinds of delimiters, some of which are used above.
+
+* ```{% ... %}``` for [statements and control structures](http://jinja.pocoo.org/docs/dev/templates/#list-of-control-structures) such as for/if/else.
+  * In the example above, statements are used to check whether a user is logged in or not as well to iterate through all messages that will fill out the body of the app.
+* ```{{ ... }}``` for [expressions to print to the template output](http://jinja.pocoo.org/docs/dev/templates/#expressions)
+  * In the example above, expressions are used to display either a login or logout button and any messages or entries stored in the database
+* ```{# ... #}``` for [comments not included in the template output](http://jinja.pocoo.org/docs/dev/templates/#comments)
+* ```#  ... ##``` for [line statements](http://jinja.pocoo.org/docs/dev/templates/#line-statements)
+
+As is described on [Flask's Template Inheritance](http://flask.pocoo.org/docs/0.10/patterns/templateinheritance/#template-inheritance) page, one of the most powerful aspects of Jinja2 is its capability for template inheritance. Template Inheritance enables a basic template frame containing all common elements of a website to be filled in by child templates containing other content, eg. comments on a blog post or website tools only admins can access. In the Flaskr example, login.html and show_entries.html are both child templates of layout.html - login.html is shown below.
+
+```
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Login</h2>
+  {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
+  <form action="{{ url_for('login') }}" method="post">
+    <dl>
+      <dt>Username:
+      <dd><input type="text" name="username">
+      <dt>Password:
+      <dd><input type="password" name="password">
+      <dd><input type="submit" value="Login">
+    </dl>
+  </form>
+{% endblock %}
+```
+
+Child templates must begin with the ```{% extends %}``` tag indicating its parent and then contain its content within a ```{% block %}``` tag in which case it will overwrite the same ```{% block %}``` tag in the parent document.
+
+[Jinja's template designer documentation may be found here.](http://jinja.pocoo.org/docs/dev/templates/#list-of-control-structures)
 
 [Flask's specific integration with Jinja2 is documented here.](http://flask.pocoo.org/docs/0.10/templating/#jinja-setup)
 
-### Werkzeug Templatting
-
-
-
+### Werkzeug Toolkit
 
 ### Tutorials I Followed in Learning the Basics
 
@@ -59,10 +111,15 @@ $ python flaskr.py
  * Restarting with reloader
 
 $ python flaskr_tests.py 
-...
 ----------------------------------------------------------------------
 Ran 3 tests in 0.038s
 
 OK
+```
 
+If the previous example does not work, there may have been a problem creating the required tables in the database. In a python shell within the willie_blog directory, type the following and it should work:
+
+```
+>>> from flaskr import init_db
+>>> init_db()
 ```

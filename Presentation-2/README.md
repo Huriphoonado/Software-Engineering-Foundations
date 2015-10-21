@@ -121,7 +121,42 @@ if __name__ == '__main__':
 
 ### Installing and Getting Started With Flask
 
+The makers of Flask and Werkzeug recommend first and foremost that all developers use [virtualenv](https://virtualenv.pypa.io/en/latest/), a tool to create isolated Python environments.
 
+```
+$ sudo pip install virtualenv
+...
+$ virtualenv --version
+13.1.2
+```
+
+Virtualenv allows you to work with a specific version of Python and specific libraries within an isolated project preventing multiple projects with different dependencies from breaking eachother. A virtual environment can be created within your project directory.
+
+```
+$ mkdir newproj
+$ cd newproj/
+$ virtualenv venv --python=python2.7
+Running virtualenv with interpreter /opt/local/bin/python2.7
+New python executable in venv/bin/python
+Installing setuptools, pip, wheel...done.
+```
+
+Whenever you want to work on your project you may activate the virtual environment via the following command:
+
+```
+Willie-Paynes-MacBook-Pro:newproj williepayne$ . venv/bin/activate
+(venv)Willie-Paynes-MacBook-Pro:newproj williepayne$
+(venv)Willie-Paynes-MacBook-Pro:newproj williepayne$ deactivate
+Willie-Paynes-MacBook-Pro:newproj williepayne$ 
+```
+
+Finally, you may install Flask:
+
+```
+$ pip install Flask
+...
+
+```
 
 ### Flask Application Structure
 

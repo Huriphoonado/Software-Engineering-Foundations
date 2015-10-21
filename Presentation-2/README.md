@@ -98,7 +98,26 @@ Child templates must begin with the ```{% extends %}``` tag indicating its paren
 
 [Flask's specific integration with Jinja2 is documented here.](http://flask.pocoo.org/docs/0.10/templating/#jinja-setup)
 
-### Werkzeug Toolkit
+### Werkzeug
+
+Werkzeug is the base of Flask and is an advanced WSGI utility module enabling web applications built with Python to communicate with a webserver. It is essentially middleware that can be used to build frameworks (like Flask) or web applications. [Flask in particular uses Werkzeug for its routing system](http://werkzeug.pocoo.org/docs/0.10/routing/) which is designed to order routes by complexity meaning they can be declared in an arbitrary order and to ensure that URLs are unique.
+
+Werkzeug's Hello World application looks like this:
+
+```
+from werkzeug.wrappers import Request, Response
+
+@Request.application
+def application(request):
+    return Response('Hello World!')
+
+if __name__ == '__main__':
+    from werkzeug.serving import run_simple
+    run_simple('localhost', 4000, application)
+```
+
+* The Request object wraps the WSGI Environment (which contains all the information the user request transmits to the application) and provides read-only access to the data.
+* The Response object is a WSGI application that may be used to send data back to the server.
 
 ### Tutorials I Followed in Learning the Basics
 

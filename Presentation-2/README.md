@@ -197,6 +197,16 @@ Flasks' documentation on URLS may be found [here](http://flask.pocoo.org/docs/0.
 
 ### HTTP Methods
 
+Flask allows you to include an [HTTP methods](http://www.w3schools.com/tags/ref_httpmethods.asp) argument in the ```route()``` decorator. (The argument defaults to ```'GET'```.) In the Flaskr demo app, 'GET' is used when simply displaying blog posts, ```@app.route('/')```, 'POST' is used when submitting blog posts, ```@app.route('/add, methods=['POST'])```, and both are used when inviting the user to log in and display his/her status, ```@app.route('/login', methods=['GET', 'POST'])```. Flask supports a few HTTP methods:
+
+* GET - Retrieve information from the server. GET requests may be cached and remain in the browser history.
+* POST - Submit information to be processed and stored. The server must ensure that the data is only stored once. POST requests may not be cached or remain in the browser history.
+* HEAD - Only return HTTP headers and not the document body.
+* PUT - Similar to POST, but the server may store the submitted data multiple times potentially making the request more reliable.
+* DELETE - Remove the specified resource.
+
+### Using A Database With Flask
+
 ### Flask Project Structure
 
 A smaller application may look like this:
@@ -246,7 +256,7 @@ app = Flask(__name__)
 import yourapplication.views
 ```
 
-The file views.py is responsible is responsible for all of the view functions:
+The file views.py is responsible for all of the view functions:
 
 ```
 from yourapplication import app

@@ -158,7 +158,46 @@ $ pip install Flask
 
 ```
 
-### Flask Application Structure
+### Flask Routes
+
+Like all modern web applications Flask enables the developer to select clear URLs and map specific functions to them. The ```route()``` decorator binds a function to a URL. 
+
+```
+@app.route('/')
+def index():
+    pass
+
+@app.route('/hello')
+def hello():
+    return 'Hello World' # display some text (eg at http://localhost:5000/hello)
+
+@app.route('/about-me')
+def footer():
+	return render_template(about-me.html) # render a template
+```
+
+URLs can contain variables marked as ```<variable>``` as well. By default, variables accept strings, but other datatypes (int, float, path) called converters may be specified: ```<converter:variable>```
+
+```
+@app.route('/user/<username>') # Include the username in the url
+def show_user_profile(username):
+    return 'User %s' % username
+
+@app.route('/post/<int:post_id>') # grab the integer post id
+def show_post(post_id):
+    return 'Post %d' % post_id
+```
+
+Finally, Flask has specific rules about the use of trailing slashes to make sure that URLs are all kept unique.
+
+1. If a URL ends with a slash (eg ```@app.route('/hello/')```) and is navigated to without a slash, the user is automatically redirected to the same page with a trailing slash attached.
+2. However, if the URL is defined without a trailing slash and the user navigates to the URL with a trailing slash, he/she will reach a 404 error.
+
+Flasks' documentation on URLS may be found [here](http://flask.pocoo.org/docs/0.10/api/#url-route-registrations) and information on Flask's URL building feature may be found [here](http://flask.pocoo.org/docs/0.10/quickstart/#url-building).
+
+### HTTP Methods
+
+### Flask Project Structure
 
 A smaller application may look like this:
 

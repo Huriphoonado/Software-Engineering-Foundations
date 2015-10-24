@@ -354,7 +354,7 @@ for user in query_db('select * from users'):
 
 ```
 
-As is done in the Flaskr app, a function should be used to create the database based on an included schema. (In the case of the tutorial schema.sql is a single table containing auto-incrementing ids, titles, and descriptions for blog posts).
+As is done in the Flaskr app, a function should be used to create the database based on an included schema. (In the case of the tutorial, schema.sql is a single table containing auto-incrementing ids, titles, and descriptions for blog posts).
 
 ```
 def init_db():
@@ -373,11 +373,100 @@ The above code may be run to initialize the database using the following command
 
 ### Testing Flask Apps
 
+Flask exposes the [Werkzeug test client](http://werkzeug.pocoo.org/docs/0.10/test/) allowing developers to write automated unit tests. [I will summarize the guide Flask provides on integrating the Python Unittest library.](http://flask.pocoo.org/docs/0.10/testing/)
 
+A testing skeleton may look like this:
+
+```
+import os
+import flaskr
+import unittest
+import tempfile
+
+class FlaskrTestCase(unittest.TestCase):
+
+    def setUp(self):
+        self.db_fd, flaskr.app.config['DATABASE'] = tempfile.mkstemp()
+        flaskr.app.config['TESTING'] = True
+        self.app = flaskr.app.test_client()
+        flaskr.init_db()
+
+    def tearDown(self):
+        os.close(self.db_fd)
+        os.unlink(flaskr.app.config['DATABASE'])
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+* Import the necessary libraries
+  * ```os``` is required for closing and unlinking the database.
+  * ```flaskr``` is the name of the project that will be tested.
+  * ```unittest``` [is the unit testing framework that will be used.](https://docs.python.org/2/library/unittest.html)
+  * ```tempfile``` will enable us to create a temporary database used only for tests so we are not using the main database.
+* Define a new test case class and provide setup and tear-down functions. These functions will run before and after every individual test. (A more complex application may require multiple subclasses with their own unique setup and tear-down functions.)
+  * ```setUp(self)``` creates a new database, sets the 'TESTING' flag to True enabling the test mode of Flask extensions, declares a new [test_client](http://flask.pocoo.org/docs/0.10/api/#test-client), and runs the init_db() function from flaskr.py. 
+  * ```tearDown(self)``` deletes the database after tests have been run closing the file and removing it from the filesystem.
+
+The first test for Flaskr checks whether a the application is initialized properly with an empty database.
+
+```
+def test_empty_db(self):
+        rv = self.app.get('/')
+        assert 'No entries here so far' in rv.data
+```
+
+The second test asserts that only with the proper credentials may a user login to the application.
+
+```
+def login(self, username, password):
+    return self.app.post('/login', data=dict(
+        username=username,
+        password=password
+    ), follow_redirects=True)
+
+def logout(self):
+    return self.app.get('/logout', follow_redirects=True)
+
+def test_login_logout(self):
+    rv = self.login('admin', 'default')
+    assert 'You were logged in' in rv.data
+    rv = self.logout()
+    assert 'You were logged out' in rv.data
+    rv = self.login('adminx', 'default')
+    assert 'Invalid username' in rv.data
+    rv = self.login('admin', 'defaultx')
+    assert 'Invalid password' in rv.data
+```
+
+Finally, the third test case checks whether a new entry may be posted.
+
+```
+def test_messages(self):
+    self.login('admin', 'default')
+    rv = self.app.post('/add', data=dict(
+        title='<Hello>',
+        text='<strong>HTML</strong> allowed here'
+    ), follow_redirects=True)
+    assert 'No entries here so far' not in rv.data
+    assert '&lt;Hello&gt;' in rv.data
+    assert '<strong>HTML</strong> allowed here' in rv.data
+```
+
+If all tests pass, the output should look something like this:
+
+```
+$ python flaskr_tests.py 
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.051s
+
+OK
+```
 
 ### Flask Project Structure
 
-A smaller application may look like this:
+Snaller applications built with Flask may look something like this:
 
 ```
 /yourapplication
@@ -436,6 +525,8 @@ def index():
 
 ### Tutorials I Followed in Learning the Basics
 
+The following commands may be used to run the files contained in the Flask_Tutorials directory.
+
 ```
 $ python helloFlask.py 
  * Running on http://127.0.0.1:5000/
@@ -460,3 +551,4 @@ If the previous example does not work, there may have been a problem creating th
 
 ### Further Reading
 
+This document has barely scratched the surface of all that Flask has to offer. [Flask's extensive API](http://flask.pocoo.org/docs/0.10/api/) provides information on all of Flask's interfaces, [O'Reilly has published a book titled *Flask Web Development*](http://shop.oreilly.com/product/0636920031116.do) that describes how to build a much bigger blogging app and has been well-recieved, [Flask provides an example on building a Twitter clone called 'MiniTwit'](https://github.com/mitsuhiko/flask/tree/master/examples/minitwit/), and many other Flask tutorials exist all over the internet.

@@ -6,7 +6,7 @@ Flask is a popular web framework for Python enabling the development of reliable
 
 Flask's developers refer to Flask as a microframework. "Micro" means that the core of Flask is simple yet extensible. Flask is modular and does not include anything that existing libraries already support such as a database abstraction layer or form validation. Developers are free to make their applications as small as possible, use libraries and frameworks they already understand, and install extensions when necessary that Flask promises to support.
 
-"Micro" also means that Flask is easy to install and get running. Flask's Hello World App looks like this:
+"Micro" also means that Flask is easy to install and get running. Flask's Hello World app looks like this:
 
 ```
 from flask import Flask
@@ -218,6 +218,80 @@ Flask allows you to include an [HTTP methods](http://www.w3schools.com/tags/ref_
 * PUT - Similar to POST, but the server may store the submitted data multiple times potentially making the request more reliable.
 * DELETE - Remove the specified resource.
 
+### Flask View Functions
+
+Much of your time spent developing apps with Flasks will be spent building view functions which provide application logic, render template files, and interface with the application's database. We will look in depth at the view functions used in the Flaskr tutorial app.
+
+#### ```show_entries()``` displays a list of blog posts:
+
+```
+@app.route('/')
+def show_entries():
+    cur = g.db.execute('select title, text from entries order by id desc')
+    entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
+    return render_template('show_entries.html', entries=entries)
+```
+
+* Map the URL ```/``` to ```show_entries()```.
+* Query the database for the title and text of all entries, and convert the results into a dict ```entries```.
+* Render the template show_entries.html passing the ```entries``` dict to the template.
+
+#### ```add_entry()``` allows the user to add new blog posts:
+
+```
+@app.route('/add', methods=['POST'])
+def add_entry():
+    if not session.get('logged_in'):
+        abort(401)
+    g.db.execute('insert into entries (title, text) values (?, ?)',
+                 [request.form['title'], request.form['text']])
+    g.db.commit()
+    flash('New entry was successfully posted')
+    return redirect(url_for('show_entries'))
+```
+
+* Map the URL ```/add``` to ```add_entry()``` and indicate that information can be submitted.
+* If the user trys to add a post, but is not logged in, prevent submission and display a 401 error. (This will occur if the user types in the ```/add``` url.)
+* Otherwise, add the entry to the database (being careful to use question marks which will prevent SQL injection) and commit the submission.
+* Once the submission has successfully completed, [display a message with ```flash()```](http://flask.pocoo.org/docs/0.10/api/#flask.flash) and redirect the user back to the url used for the show entries function.
+
+#### ```login()``` allows the user to login to the application:
+
+```
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != app.config['USERNAME']:
+            error = 'Invalid username'
+        elif request.form['password'] != app.config['PASSWORD']:
+            error = 'Invalid password'
+        else:
+            session['logged_in'] = True
+            flash('You were logged in')
+            return redirect(url_for('show_entries'))
+    return render_template('login.html', error=error)
+```
+
+* Map the URL ```/login``` to ```login()``` and indicate that information can be submitted and retrieved.
+* If the user trys to submit information, check that the username and password are correct ('admin' and 'default' respectively).
+* If either is incorrect, reload the login template passing in an error message.
+* Otherwise, set the user's login status to True, display a message, and redirect the user to the url mapped to the ```show_entries()``` function. ([The ```session``` object](http://flask.pocoo.org/docs/0.10/api/#sessions) is imported from Flask that works as a dict, but keeps track of modifications.)
+
+#### ```logout()``` allows the user to log out of the application:
+
+```
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    flash('You were logged out')
+    return redirect(url_for('show_entries'))
+```
+
+* Map the URL ```/logout``` to ```logout()```.
+* The ```pop()``` method of the ```session``` dict will delete the key from the session if it exists or do nothing if it doesn't effectively logging the user out.
+* Redirect the user to the url mapped to the ```show_entries()``` function.
+
 ### Using A Database With Flask
 
 As was previously mentioned, Flask does not enforce the use of any specific database, but provides documentation on using [SQLite 3](http://flask.pocoo.org/docs/0.10/patterns/sqlite3/) and [SQLAlchemy](http://flask.pocoo.org/docs/0.10/patterns/sqlalchemy/). We will cover SQLite 3 briefly. From the documentation:
@@ -298,6 +372,8 @@ The above code may be run to initialize the database using the following command
 ```
 
 ### Testing Flask Apps
+
+
 
 ### Flask Project Structure
 
@@ -381,3 +457,6 @@ If the previous example does not work, there may have been a problem creating th
 >>> from flaskr import init_db
 >>> init_db()
 ```
+
+### Further Reading
+

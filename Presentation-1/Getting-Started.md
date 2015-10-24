@@ -6,7 +6,7 @@ PhoneGap supports two interfaces for creating applications:
 
 ##### Desktop App which can be downloaded and easily installed from [here](http://docs.phonegap.com/getting-started/1-install-phonegap/desktop/).
 
-[PhoneGapInstaller.png]
+<img src="https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/images/PhoneGapInstaller.png" width="510" height="343" align="middle" />
 
 ##### Command Line Interface - (Thorough instructions also found [here](http://docs.phonegap.com/getting-started/1-install-phonegap/cli).)
 
@@ -73,27 +73,27 @@ First, you will need to download the PhoneGap mobile app for your device ([iOS](
 
 Open up the Desktop PhoneGap application and click the "+" sign in the top right corner to create a new app.
 
-[Setup1.png Image]
+<img src=https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/images/Setup1.png width="448" height="624" align="middle" />
 
 Provide a name, ID, and location and then click "Create Project."
 
-[Setup2.png Image]
+<img src=https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/images/Setup2.png width="448" height="624" align="middle" />
 
 Click the play button to make sure the server is running and take note of the address.
 
-[Setup3.png Image]
+<img src=https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/images/Setup3.png width="448" height="624" align="middle" />
 
 Open up the mobile app on your device and type in the server address shown in the Desktop App.
 
-[Setup4.png Image]
+<img src=https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/images/Setup4.PNG width="375" height="667" align="middle" />
 
 If everything goes according to plan you should see the PhoneGap logo and the blinking text, "DEVICE IS READY."
 
-[Setup5.png Image]
+<img src=https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/images/Setup5.PNG width="375" height="667" align="middle" />
 
 Finally, within your application directory open up index.html. (In my case it is found in Willie\'s\ App/www/index.html.) Any changes you make and save within this document should appear instantly on your device. (Tapping the screen with four fingers will cause an update.) In this example, I have changed the text within the header.
 
-[Setup6.png Image]
+<img src=https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/images/Setup6.PNG width="375" height="667" align="middle" />
 
 ### Getting the Developer App Working with the Commandline Interface
 
@@ -150,4 +150,6 @@ And finally, just like the previous example, you may begin editing index.html an
 
 If you are interested in understanding the code powering the Hello World example, PhoneGap provides a guide [here](http://docs.phonegap.com/develop/hello-world-explained/).
 
-### Accessing Mobile Device Features with Cordova
+#### [Accessing Mobile Device Features with Cordova](https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/Intro-To-Cordova.md)
+
+#### [Or Go to Previous Page](https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/What-Is-PhoneGap.md)

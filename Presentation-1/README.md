@@ -1,5 +1,7 @@
 # PhoneGap
 
+<img src="https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/images/PhoneGapLogo.png" width="300" height="255" align="middle" />
+
 ## Introduction
 
 ##### PhoneGap is an open source and free framework (with some optional priced tools) enabling the creation of mobile apps across platforms using standard web APIs (HTML, CSS, Javascript).
@@ -20,4 +22,4 @@ Consider a small company that wishes to build an app and release it on a few of 
 ### Recommended PhoneGap Usage
 PhoneGap is best for individuals or small teams who want to develop and release an app supporting two or more platforms with limited time that does not make use of extensive graphics or animation. PhoneGap may also work well in larger development teams for prototyping an app before working on the final native versions.
 
-#### So what exactly is PhoneGap and how does it work?
+#### [So what exactly is PhoneGap and how does it work?](https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-1/What-Is-PhoneGap.md)

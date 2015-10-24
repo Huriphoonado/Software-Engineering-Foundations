@@ -1,5 +1,7 @@
 # Flask
 
+![Flask Logo](https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-2/images/flaskLogo.PNG)
+
 ### What Is Flask
 
 Flask is a popular web framework for Python enabling the development of reliable, scalable, and maintainable web applications. Flask was first released in 2010 and the latest version is 0.10.1.
@@ -69,11 +71,11 @@ Jinja2 contains a few kinds of delimiters, some of which are used above.
 * ```{% ... %}``` for [statements and control structures](http://jinja.pocoo.org/docs/dev/templates/#list-of-control-structures) such as for/if/else.
   * In the example above, statements are used to check whether a user is logged in or not as well to iterate through all messages that will fill out the body of the app.
 * ```{{ ... }}``` for [expressions to print to the template output](http://jinja.pocoo.org/docs/dev/templates/#expressions)
-  * In the example above, expressions are used to display either a login or logout button and any messages or entries stored in the database
+  * In the example above, expressions are used to display either a login or logout button and any messages or entries stored in the database.
 * ```{# ... #}``` for [comments not included in the template output](http://jinja.pocoo.org/docs/dev/templates/#comments)
 * ```#  ... ##``` for [line statements](http://jinja.pocoo.org/docs/dev/templates/#line-statements)
 
-As is described on [Flask's Template Inheritance](http://flask.pocoo.org/docs/0.10/patterns/templateinheritance/#template-inheritance) page, one of the most powerful aspects of Jinja2 is its capability for template inheritance. Template Inheritance enables a basic template frame containing all common elements of a website to be filled in by child templates containing other content, eg. comments on a blog post or website tools only admins can access. In the Flaskr example, login.html and show_entries.html are both child templates of layout.html - login.html is shown below.
+As is described on [Flask's Template Inheritance](http://flask.pocoo.org/docs/0.10/patterns/templateinheritance/#template-inheritance) page, one of the most powerful aspects of Jinja2 is its capability for template inheritance. Template Inheritance enables a basic template frame containing all common elements of a website to be filled in by child templates containing other content, (eg. comments on a blog post or website tools only admins can access). In the Flaskr example, login.html and show_entries.html are both child templates of layout.html - login.html is shown below.
 
 ```
 {% extends "layout.html" %}
@@ -236,6 +238,8 @@ def show_entries():
 * Query the database for the title and text of all entries, and convert the results into a dict ```entries```.
 * Render the template show_entries.html passing the ```entries``` dict to the template.
 
+![Flaskr App Screenshot](https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-2/images/Flaskr0.png)
+
 #### ```add_entry()``` allows the user to add new blog posts:
 
 ```
@@ -278,6 +282,12 @@ def login():
 * If either is incorrect, reload the login template passing in an error message.
 * Otherwise, set the user's login status to True, display a message, and redirect the user to the url mapped to the ```show_entries()``` function. ([The ```session``` object](http://flask.pocoo.org/docs/0.10/api/#sessions) is imported from Flask that works as a dict, but keeps track of modifications.)
 
+![Flaskr App Screenshot](https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-2/images/Flaskr1.png)
+
+![Flaskr App Screenshot](https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-2/images/Flaskr2.png)
+
+![Flaskr App Screenshot](https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-2/images/Flaskr3.png)
+
 #### ```logout()``` allows the user to log out of the application:
 
 ```
@@ -291,6 +301,10 @@ def logout():
 * Map the URL ```/logout``` to ```logout()```.
 * The ```pop()``` method of the ```session``` dict will delete the key from the session if it exists or do nothing if it doesn't effectively logging the user out.
 * Redirect the user to the url mapped to the ```show_entries()``` function.
+
+![Flaskr App Screenshot](https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-2/images/Flaskr4.png)
+
+![Flaskr App Screenshot](https://github.com/Huriphoonado/Software-Engineering-Foundations/blob/master/Presentation-2/images/Flaskr5.png)
 
 ### Using A Database With Flask
 
@@ -466,7 +480,7 @@ OK
 
 ### Flask Project Structure
 
-Snaller applications built with Flask may look something like this:
+Smaller applications built with Flask may look something like this:
 
 ```
 /yourapplication

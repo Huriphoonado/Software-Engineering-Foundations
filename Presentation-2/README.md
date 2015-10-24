@@ -158,9 +158,22 @@ $ pip install Flask
 
 ```
 
-### Flask Routes
+### The Flask Object
 
-Like all modern web applications Flask enables the developer to select clear URLs and map specific functions to them. The ```route()``` decorator binds a function to a URL. 
+The first thing you will want to do in your main module or in the __init.py__ file of your package (described later) is to create an instance of the Flask object. 
+
+```
+from flask import Flask
+app = Flask(__name__)
+```
+
+The flask object implements a WSGI application and is passed the name of the module or package of the application. It acts as a central registry for the view functions, the URL rules, template configuration and much more. In an application with only a single module module, 
+
+[The Flask Object can take in the parameters described here in the Flask API.](http://flask.pocoo.org/docs/0.10/api/)
+
+### URL Routing
+
+Like all modern web applications Flask enables the developer to pick exact URLs and map specific functions to them. The ```route()``` decorator binds a function to a URL. 
 
 ```
 @app.route('/')
@@ -206,6 +219,85 @@ Flask allows you to include an [HTTP methods](http://www.w3schools.com/tags/ref_
 * DELETE - Remove the specified resource.
 
 ### Using A Database With Flask
+
+As was previously mentioned, Flask does not enforce the use of any specific database, but provides documentation on using [SQLite 3](http://flask.pocoo.org/docs/0.10/patterns/sqlite3/) and [SQLAlchemy](http://flask.pocoo.org/docs/0.10/patterns/sqlalchemy/). We will cover SQLite 3 briefly. From the documentation:
+
+```
+import sqlite3
+from flask import g
+
+DATABASE = '/path/to/database.db'
+
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = connect_to_database()
+    return db
+
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
+```
+
+* Import SQLite and the Flask g object which stores the current database connection. (THe SQLite library ships with all distributions of Python after Python 2.5.)
+* The ```get_db()``` function will return the current database and ```close_connection(exception)``` will automatically terminate the database connection.
+
+Flask recommends that developers open/close the connection before and after every request. Flask provides three helpful decorators.
+
+1. Functions marked with ```before_request()``` are called before a request and are passed no arguments.
+2. Functions marked with ```after_request()``` are called after a request and passed the response that will be sent to the client. However, these may not be executed if an exception is raised.
+3. Functions marked with ```teardown_request()``` may not modify the request and are passed all exception values.
+
+[Information on adding to, removing from, and querying a SQLite database may be found on Python's official documentation.](https://docs.python.org/2/library/sqlite3.html) For example, querying a books database may look like this:
+
+```
+connection = sqlite3.connect('books.db')
+
+with connection:    
+    
+    cursor = connection.cursor()    
+    cursor.execute("SELECT * FROM Books")
+
+    rows = cursor.fetchall()
+
+    for row in rows:
+        print row
+```
+
+[Flask recommends providing a querying function that combines getting the cursor, executing, and fetching the results:](http://flask.pocoo.org/docs/0.10/patterns/sqlite3/#easy-querying)
+
+```
+def query_db(query, args=(), one=False):
+    cursor = get_db().execute(query, args)
+    retrieve = cursor.fetchall()
+    cursor.close()
+    return (retrieve[0] if retrieve else None) if one else retrieve
+
+for user in query_db('select * from users'):
+    print user['username'], 'has the id', user['user_id']
+
+```
+
+As is done in the Flaskr app, a function should be used to create the database based on an included schema. (In the case of the tutorial schema.sql is a single table containing auto-incrementing ids, titles, and descriptions for blog posts).
+
+```
+def init_db():
+	with closing(connect_db()) as db:
+		with app.open_resource('schema.sql', mode='r') as f:
+			db.cursor().executescript(f.read())
+		db.commit()
+```
+
+The above code may be run to initialize the database using the following commands from within a python shell:
+
+```
+>>> from flaskr.py import init_db
+>>> init_db()
+```
+
+### Testing Flask Apps
 
 ### Flask Project Structure
 

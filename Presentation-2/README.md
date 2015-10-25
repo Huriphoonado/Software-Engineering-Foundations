@@ -156,8 +156,6 @@ Finally, you may install Flask:
 
 ```
 $ pip install Flask
-...
-
 ```
 
 ### The Flask Object

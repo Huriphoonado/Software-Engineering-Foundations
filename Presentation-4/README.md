@@ -38,7 +38,7 @@ print "Sequential: %d" % (sequentialEnd - sequentialStart)
 print "Concurrent: %d" % (concurrentEnd - concurrentStart)
 ```
 
-On my machine, the sequential program runs more than twice as fast as the concurrent program:
+The above code simply counts down to 0 from 100000000 first sequentially and second by two threads started at nearly the same instant. You may think that the two concurrent threads would run faster, or if the GIL is limiting their ability to execute code at the same time, maybe they would take just as long or slightly longer. However, on my machine, the concurrent program takes more than twice as long to run as the sequential program:
 
 ```
 $ python threadPerformance.py
@@ -50,18 +50,53 @@ Beazly did a real-time trace of all GIL acquisitions, releases, conflicts, retri
 
 #### Concurrency Libraries
 
-As a result of the Global Intepreter Lock, The Python Standard Library offers a few APIs (supported by different versions of Python) for concurrency: threading, multiprocessing, and concurrent.futures.
+As a result of the Global Intepreter Lock, The Python Standard Library offers a few APIs (supported by different versions of Python) for concurrency: threading, multiprocessing, and concurrent.futures. 
 
 #### Further Reading
 
 * [Nathan Grigg, an engineer at Google, has written a very good, brief discussion of the differences between Python Multithreading and Multiprocessing.](http://nathangrigg.net/2015/04/python-threading-vs-processes/)
-* [Jesse Noller, a former chair of PyCon, (among other things), has written a much more in-depth article about Python Threads and the Global Intepreter Lock.](http://jessenoller.com/blog/2009/02/01/python-threads-and-the-global-interpreter-lock) I will continue to reference this paper throughout my overview.
+* [Jesse Noller, a former chair of PyCon, (among other things), has written a much more in-depth article about Python Threads and the Global Intepreter Lock.](http://jessenoller.com/blog/2009/02/01/python-threads-and-the-global-interpreter-lock) The article also does a good job introducing Python concurrency constructs to Java programmers. (I will continue to reference this paper throughout my overview.)
 
 ## Threading
 
-Concurrent programs are still possible and threads are useful.
+The [Python threading module](https://docs.python.org/2/library/threading.html#module-threading) is a higher-level interface built on top of the lower-level [thread module](https://docs.python.org/2/library/thread.html#module-thread) that has been supported since Python 1.5.2. As was described above, threads in Python are limited by the GIL and are not capable of the same parallelism possible in other languages. However, the GIL is released when doing I/O so threads can still be appropriate for creating responsive applications. 
 
-#### Race Conditions
+Python threads have the following properties.
+
+* All threads are within one process and thus share the same memory space and can acess all of the same objects.
+* Threads are lightweight meaning they can be spawned quickly.
+* Threads should not be abruptly interrupted or killed. (Doing so can cause memory leak or deadlock.)
+
+A Hello World application for the Python threading module may look something like this:
+
+```
+from threading import Thread
+
+def hello():
+	print "hello"
+
+def world():
+	print "world"
+
+myThread1 = Thread(target=hello)
+myThread2 = Thread(target=world)
+
+myThread1.start()
+myThread2.start()
+
+myThread1.join()
+myThread2.join()
+```
+
+* Threads are created by passing a callable object to the constructor, e.g. ```myThread1 = Thread(target=hello)```. The thread constructor may take in a number of arguments including target function to run via a separate thread of control, and a list of the function's arguments.
+  * A subclass can also inherit the Thread Object. In this event, only the ```__init__()``` and ```run()``` functions should be overwritten.
+  * Threads can be specified as Daemon (```myThread.setDaemon(True)```) or non-Daemon controlling whether they are abruptly stopped at shutdown.
+* The ```start()``` method is called only once per thread invoking the thread's ```run()``` method.
+* The ```join()``` method blocks the calling thread until the thread whose ```join()``` method is invoked terminates.
+
+Since threads inhabit a shared memory space, the threading module does not protect against many of the concurrency-related problems covered in class. It does however provide some support with similar constructs as other languages to guard against simultaneous access to an object or variable.
+
+#### Race Condition
 
 The following code example shows a race condition with the threading API. Ten threads increment a single global variable ```count``` 100 times. Even though the GIL prevents multiple threads from accessing a single line of bytecode at once, incrementing a variable requires multiple lines of bytecode (reading, incrementing, and writing), so it is still entirely possible for threads to step over eachother.
 
@@ -134,6 +169,54 @@ print count
 ```
 
 [A more complicated example of race conditions can be found in Jesse Noller's article](http://jessenoller.com/blog/2009/02/01/python-threads-and-the-global-interpreter-lock) showing that multiple threads moving random amounts of money between accounts in a bank with a fixed total balance can end up changing that balance.
+
+#### Locks, Re-entrant Locks, and Condition Objects
+
+[Locks](https://docs.python.org/2/library/threading.html#lock-objects) are the lowest level synchronization primitives available in Python.
+* Instantiate a lock with the ```Lock()``` constructor.
+* ```Lock.acquire()``` blocks until the lock is unlocked causing it the set the lock to locked and returning True. (```Lock.acquire(False)``` does not block and returns False immediately.)
+* ```Lock.release()``` unlocks a lock allowing one of any other blocked threads to aquire it.
+
+[A re-entrant lock](https://docs.python.org/2/library/threading.html#rlock-objects) is similar to a lock, but allows a single thread to aquire it multiple times. Essentially, nested pairs of ```acquire()``` and ```release()``` can exist on multiple levels of recursion, and other threads can only aquire a re-entrant lock once the final ```release()``` has been called. Re-entrant locks (constructed with ```RLock()```) are useful in cases where multiple points of code run in a single thread need to be synchronized.
+
+[Condition Objects](https://docs.python.org/2/library/threading.html#condition-objects) use locks to synchronize threads enabling some threads to set a condition and threads to to wait for that condition before continuing. [An example of the classic Producer-Consumer problem using Condition Objects was taken from a bogotobogo tutorial.](http://www.bogotobogo.com/python/Multithread/python_multithreading_Synchronization_Condition_Objects_Producer_Consumer.php)
+
+```
+import threading
+import time
+import logging
+
+logging.basicConfig(level=logging.DEBUG,
+                    format='(%(threadName)-9s) %(message)s',)
+
+def consumer(cv):
+    logging.debug('Consumer thread started ...')
+    with cv:
+    	logging.debug('Consumer waiting ...')
+        cv.wait()
+        logging.debug('Consumer consumed the resource')
+
+def producer(cv):
+    logging.debug('Producer thread started ...')
+    with cv:
+        logging.debug('Making resource available')
+        logging.debug('Notifying to all consumers')
+        cv.notifyAll()
+
+if __name__ == '__main__':
+    condition = threading.Condition()
+    cs1 = threading.Thread(name='consumer1', target=consumer, args=(condition,))
+    cs2 = threading.Thread(name='consumer2', target=consumer, args=(condition,))
+    pd = threading.Thread(name='producer', target=producer, args=(condition,))
+
+    cs1.start()
+    time.sleep(2)
+    cs2.start()
+    time.sleep(2)
+    pd.start()
+```
+
+* Explanation of Code Here
 
 ## Multiprocessing
 

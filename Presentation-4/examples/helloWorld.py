@@ -25,11 +25,12 @@ def hello():
 def world():
 	print "world"
 
-myProcess1 = Process(target=hello)
-myProcess2 = Process(target=world)
+if __name__ == '__main__':
+	myProcess1 = Process(target=hello)
+	myProcess2 = Process(target=world)
 
-myProcess1.start()
-myProcess2.start()
+	myProcess1.start()
+	myProcess2.start()
 
-myProcess1.join()
-myProcess2.join()
+	myProcess1.join()
+	myProcess2.join()

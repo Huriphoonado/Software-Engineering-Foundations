@@ -66,6 +66,7 @@ Python threads have the following properties.
 * All threads are within one process and thus share the same memory space and can acess all of the same objects.
 * Threads are lightweight meaning they can be spawned quickly.
 * Threads should not be abruptly interrupted or killed. (Doing so can cause memory leak or deadlock.)
+* Threads can only be run on one core.
 
 A Hello World application for the Python threading module may look something like this:
 
@@ -221,7 +222,14 @@ The above example uses two consumers and one producer and makes use of the ```no
 
 ## Multiprocessing
 
+The Python [multiprocessing library](https://docs.python.org/2/library/multiprocessing.html) is a newer approach to concurrency that has been supported since Python 2.6 and addresses many of the limitations of the threading module. Most importantly, processes work outside of the GIL and can make programs truly parallel through running on multiple CPUs.
 
+Python processes have the following functionality:
+
+* Processes do not share memory meaning some sort of communication may be necessary for processes to divide and conquer a job in parallel.
+* Processes have a bit more overhead than threads and take more time to spawn.
+* Child processes can be interrupted/killed.
+* Processes can take advantage of multiple cores.
 
 A Hello World application for the Python multiprocessing module looks almost identical to the threading module:
 
@@ -234,14 +242,23 @@ def hello():
 def world():
 	print "world"
 
-myProcess1 = Process(target=hello)
-myProcess2 = Process(target=world)
+if __name__ == '__main__':
+	myProcess1 = Process(target=hello)
+	myProcess2 = Process(target=world)
 
-myProcess1.start()
-myProcess2.start()
+	myProcess1.start()
+	myProcess2.start()
 
-myProcess1.join()
-myProcess2.join()
+	myProcess1.join()
+	myProcess2.join()
 '''
+
+We import the Process class from multiprocessing, create functions that the processes will run, tell the processes to run with ```start()```, and make sure the program ends as the processes terminate with ```join()```.
+
+#### Communication
+
+Processes do share the same synchronization primitives as the threading module, and certain objects enable them to share memory, but as was covered in class it is usually best to avoid shared states.
+
+[The Python reference manual provides a guide to best practices with Processes.](https://docs.python.org/2/library/multiprocessing.html#multiprocessing-programming)
 
 ## 

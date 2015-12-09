@@ -1,4 +1,5 @@
 from threading import Thread
+from multiprocessing import Process
 import time
 
 def count(n):
@@ -21,5 +22,17 @@ myThread1.join()
 myThread2.join()
 concurrentEnd = time.clock()
 
-print "Sequential: %d" % (sequentialEnd - sequentialStart)
-print "Concurrent: %d" % (concurrentEnd - concurrentStart)
+parallelStart = time.clock()
+myProcess1 = Process(target=count, args=(100000000,))
+myProcess1.start()
+
+myProcess2 = Process(target=count, args=(100000000,))
+myProcess2.start()
+
+myProcess1.join()
+myProcess2.join()
+parallelEnd = time.clock()
+
+print "Sequential: %f" % (sequentialEnd - sequentialStart)
+print "Concurrent: %f" % (concurrentEnd - concurrentStart)
+print "Parallel: %f" % (parallelEnd - parallelStart)

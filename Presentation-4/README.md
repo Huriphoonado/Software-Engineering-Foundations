@@ -179,7 +179,7 @@ print count
 
 [A re-entrant lock](https://docs.python.org/2/library/threading.html#rlock-objects) is similar to a lock, but allows a single thread to aquire it multiple times. Essentially, nested pairs of ```acquire()``` and ```release()``` can exist on multiple levels of recursion, and other threads can only aquire a re-entrant lock once the final ```release()``` has been called. Re-entrant locks (constructed with ```RLock()```) are useful in cases where multiple points of code run in a single thread need to be synchronized.
 
-[Condition Objects](https://docs.python.org/2/library/threading.html#condition-objects) use locks to synchronize threads enabling some threads to set a condition and threads to to wait for that condition before continuing. [An example of the classic Producer-Consumer problem using Condition Objects was taken from a bogotobogo tutorial.](http://www.bogotobogo.com/python/Multithread/python_multithreading_Synchronization_Condition_Objects_Producer_Consumer.php)
+[Condition Objects](https://docs.python.org/2/library/threading.html#condition-objects) use locks to synchronize threads enabling some threads to set a condition and threads to to wait for that condition before continuing. [An reduced example of the classic Producer-Consumer problem using Condition Objects was taken from a bogotobogo tutorial.](http://www.bogotobogo.com/python/Multithread/python_multithreading_Synchronization_Condition_Objects_Producer_Consumer.php)
 
 ```
 import threading
@@ -216,8 +216,32 @@ if __name__ == '__main__':
     pd.start()
 ```
 
-* Explanation of Code Here
+The above example uses two consumers and one producer and makes use of the ```notifyAll()``` and ```wait()``` methods.
+* More documentation
 
 ## Multiprocessing
+
+
+
+A Hello World application for the Python multiprocessing module looks almost identical to the threading module:
+
+'''
+from multiprocessing import Process
+
+def hello():
+	print "hello"
+
+def world():
+	print "world"
+
+myProcess1 = Process(target=hello)
+myProcess2 = Process(target=world)
+
+myProcess1.start()
+myProcess2.start()
+
+myProcess1.join()
+myProcess2.join()
+'''
 
 ## 

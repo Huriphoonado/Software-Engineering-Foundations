@@ -1,6 +1,6 @@
-# Concurrency in Python
+# Concurrency and Parallelism in Python
 
-In class we covered concurrency in a variety of languages including Java, Clojure, and Elixir. Python happens to be my language of choice, but I have only limited experience writing concurrent or parallel programs in Python. This overview will be very useful for me.
+In Software Engineering Foundations we covered concurrency in a variety of languages including Java, Clojure, and Elixir. Python happens to be my language of choice, but I have only limited experience writing concurrent or parallel programs in Python. This overview will cover the concurreny support offered by the Python Standard library.
 
 #### Overview of Global Interpreter Lock
 
@@ -55,7 +55,7 @@ As a result of the Global Intepreter Lock, The Python Standard Library offers a 
 #### Further Reading
 
 * [Nathan Grigg, an engineer at Google, has written a very good, brief discussion of the differences between Python Multithreading and Multiprocessing.](http://nathangrigg.net/2015/04/python-threading-vs-processes/)
-* [Jesse Noller, a former chair of PyCon, (among other things), has written a much more in-depth article about Python Threads and the Global Intepreter Lock.](http://jessenoller.com/blog/2009/02/01/python-threads-and-the-global-interpreter-lock) The article also does a good job introducing Python concurrency constructs to Java programmers. (I will continue to reference this paper throughout my overview.)
+* [Jesse Noller, a former chair of PyCon, (among other things), has written a much more in-depth article about Python Threads and the Global Intepreter Lock.](http://jessenoller.com/blog/2009/02/01/python-threads-and-the-global-interpreter-lock) The article also does a good job introducing Python concurrency constructs to Java programmers.
 
 ## Threading
 
@@ -221,8 +221,7 @@ if __name__ == '__main__':
     pd.start()
 ```
 
-The above example uses two consumers and one producer and makes use of the ```notifyAll()``` and ```wait()``` methods.
-* More documentation
+The above example shows how a producer-consumer solution may be approached. The producer signals to the consumers via ```notifyAll()``` once a resource is available to consume and both consumers block via the ```wait()``` method until the resource is available.
 
 ## Multiprocessing
 
@@ -396,4 +395,51 @@ if __name__ == '__main__':
 * [The Python Module of the Week Guide, provides a very comprehensive overview on Communication between Processes.](https://pymotw.com/2/multiprocessing/communication.html#)
 * [David Beazly also includes a long lesson (over 150 slides) on threading and multiprocessing.](http://www.dabeaz.com/usenix2009/concurrent/Concurrent.pdf)
 
-## 
+## concurrent.futures
+
+[The concurrent.futures library](https://docs.python.org/3/library/concurrent.futures.html#module-concurrent.futures) is a high-level module supported since Python 3.2 that enables the asynchronous execution of multiple processes or threads. In other words, concurrent.futures is useful when one controlling process can farm out a bulk of the work to worker processes. It is not inherently more efficient than the modules considered above, but it provides more succinct syntax for using processes and threads and thus can make your code more readable and less bug-prone. The most important objects that concurrent.futures introduces are the Executor and Future objects.
+
+The Executor class provides methods for executing calls asynchronously via ```submit()``` which calls a function one time and ```map()``` which can call a function several times concurrently. Executors should not be called directly, but instead through the Executor subclasses ```ThreadPoolExecutor``` and ```ProcessPoolExecutor``` which specify whether to use a pool of threads or subprocesses. The Executor class does not return a result with ```submit()``` but instead returns a future object, essentially an IOU that promises to provide the result when ready (or an exception) and also has a wealth of other useful features. A future object can be used to check the state of an executing callable via ```cancelled()```, ```running()```, and ```done()``` methods, can be cancelled, can provide easy access to exceptions, and can have an attached callback function.
+
+As a brief example, the following code snippet shows that the Executor call is non-blocking and the future object can keep track the call's status. [A good example of an ```is_prime()``` implementation using a ProcessPoolExecutor can be found in the library's documentation.](https://docs.python.org/3/library/concurrent.futures.html#processpoolexecutor-example)
+
+```
+import concurrent.futures
+from time import sleep
+
+def double(n):
+    sleep(5)
+    return n*2
+
+def main():
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        result = executor.submit(double, 2)
+        while result.done() == False:
+            print("Done:", result.done())
+            print("Running:", result.running())
+            sleep(1)
+        else:
+            print(result.result())
+
+if __name__ == '__main__':
+    main()
+```
+
+```
+$ python3 examples/demo.py 
+Done: False
+Running: True
+Done: False
+Running: True
+Done: False
+Running: True
+Done: False
+Running: True
+Done: False
+Running: True
+4
+```
+
+## Conclusion
+
+Ten years ago the GIL prevented Python from being a worthy language for writing concurrent/parallel programs. Now, Python provides multiple approaches to concurrency. The concurrent.futures library is great for standard programs that need to dole out a lot work to a workers and safely retrieve the results, while threading and multiprocessing are lower-level and useful for more fine-grained control, threads for I/O bound programs and processes for compute bound programs.

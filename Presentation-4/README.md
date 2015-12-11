@@ -372,8 +372,28 @@ if __name__ == '__main__':
 
 The multiprocessing module has many other features including the following:
 
-*
+* [Synchronization primitives](https://docs.python.org/2/library/multiprocessing.html#synchronization-between-processes) such as locks, events, and barriers with language taken right from the threading API. Synchronization is useful when outputting text for example to make sure it is printed in correct order.
+* [Sharing state between processes with shared memory maps such as Values and Arrays, and via shared namespaces created by the manager object.](https://docs.python.org/2/library/multiprocessing.html#synchronization-between-processes)
 
-[The Python reference manual provides a guide to best practices with Processes.](https://docs.python.org/2/library/multiprocessing.html#multiprocessing-programming)
+Particularly cool I think are [Process Pools](https://docs.python.org/2/library/multiprocessing.html#module-multiprocessing.pool), a high-level interface for offloading tasks to a pool of workers. Process pools have the ```map()``` method which takes in a list of values and splits it apart into chunks of tasks (whose size can be specified) for workers to complete. Since this method blocks, there is also ```map_async()``` which can specify a callback function which is applied once a result is available from the ```map_async()``` function.
+
+The following example takes in a list of values and applies a function ```double()``` to them in parallel.
+
+```
+from multiprocessing import Pool
+
+def double(x):
+    return x*2
+
+if __name__ == '__main__':
+    pool = Pool(processes=4)
+    pool.map(double, range(1000))
+```
+
+#### Further Reading
+
+* [The Python reference manual provides a guide to best practices with Processes.](https://docs.python.org/2/library/multiprocessing.html#multiprocessing-programming)
+* [The Python Module of the Week Guide, provides a very comprehensive overview on Communication between Processes.](https://pymotw.com/2/multiprocessing/communication.html#)
+* [David Beazly also includes a long lesson (over 150 slides) on threading and multiprocessing.](http://www.dabeaz.com/usenix2009/concurrent/Concurrent.pdf)
 
 ## 

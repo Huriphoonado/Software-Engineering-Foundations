@@ -12,7 +12,7 @@ The Global Interpreter also has downsides. [One well-known example by David Beaz
 
 ```
 from threading import Thread
-import time
+import timeit
 
 def count(n):
 	while n > 0:
@@ -99,9 +99,9 @@ Since threads inhabit a shared memory space, the threading module does not prote
 
 #### Race Conditions
 
-Q: Why did the multithreaded chicken cross the road?
+##### Q: Why did the multithreaded chicken cross the road?
 
-A: to To other side. get the
+##### A: to To other side. get the
 
 The following code example shows a race condition with the threading API. Ten threads increment a single global variable ```count``` 100 times. Even though the GIL prevents multiple threads from accessing a single line of bytecode at once, incrementing a variable requires multiple lines of bytecode (reading, incrementing, and writing), so it is still entirely possible for threads to step over eachother.
 
@@ -259,7 +259,7 @@ Python processes have the following functionality:
 
 A Hello World application for the Python multiprocessing module looks almost identical to the threading module.
 
-'''
+```
 from multiprocessing import Process
 
 def hello():
@@ -277,7 +277,7 @@ if __name__ == '__main__':
 
 	myProcess1.join()
 	myProcess2.join()
-'''
+```
 
 We import the Process class from multiprocessing, create functions that the processes will run, tell the processes to run with ```start()```, and make sure the program ends as the processes terminate with ```join()```.
 

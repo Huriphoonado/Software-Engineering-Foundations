@@ -1,4 +1,4 @@
-from multiprocessing import Process, JoinableQueue, Queue
+from multiprocessing import Process, JoinableQueue
 import time
 
 class Consumer(Process):
@@ -29,7 +29,6 @@ class Producer(Process):
 
 	def run(self):
 		for i in range(self.numTasks):
-			#if self.q.qsize() < qSize:
 			self.q.put(i)
 			print "Producer %i produced Task %i" % (self.id, i)
 		self.q.put(None) # Poison Pill
@@ -41,7 +40,7 @@ def main():
 	numProcesses = 4
 	numTasks = 10
 	qSize = 20
-	q = JoinableQueue()
+	q = JoinableQueue(qSize)
 	producers = []
 	consumers = []
 
